@@ -6,4 +6,4 @@
 #   -SQL을 직접 작성하지 않고, python 클래스로 db 테이블을 다루는 방식
 #   -예 : Todo 클래스 -?> todo테이블 자동생성
 # ===================================================
-from sqlalchemy.orm
+from sqlalchemy.ormdf
