@@ -1,17 +1,26 @@
-from blog.schema.response import Postresponse
-from blog.schema.request import PostCreateRequest, PostUpdateRequest
+from schema.response import Postresponse
+from schema.request import PostCreateRequest, PostUpdateRequest
 from fastapi import FastAPI, status, HTTPException
 
-app = FastAPI()
+app = FastAPI(
+    titel='블로그 API',
+    description='FastAPI 입문 실습 과제 - 블로그',
+    version='1.0.0'
+)
 
 posts = [
-    {'id':1, 'title':'파이썬', 'content':'python'},
-    {'id':2, 'title':'자바', 'content':'Java'}
+    # {'id':1, 'title':'파이썬', 'content':'python'},
+    # {'id':2, 'title':'자바', 'content':'Java'}
 ]
+
+# 루트
+@app.get('/')
+def root_handler():
+    return {'message': '블로그'}
 
 # 전체 데이터 조회
 @app.get(
-    '/',
+    '/posts',
     response_model=list[Postresponse],
     status_code=status.HTTP_200_OK    
 )
@@ -20,27 +29,27 @@ def get_posts_handler():
 
 # 단일 데이터 조회
 @app.get(
-    '/{post_id}',
+    '/posts/{post_id}',
     response_model=Postresponse,
     status_code=status.HTTP_200_OK
 )
 def get_post_handler(post_id: int):
-    for post in posts:
-        if post['id'] == post_id:
-            return post
+    for a in posts:
+        if a['id'] == post_id:
+            return a
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Post not found')
 
 # 포스트 생성
 @app.post(
-    '/',
+    '/posts',
     response_model=Postresponse,
     status_code=status.HTTP_201_CREATED
 )
-def create_todo_handler(body: PostCreateRequest):
+def create_post_handler(body: PostCreateRequest):
     new_post = {
         'id': len(posts) + 1,
         'title': body.title,
-        'content': body.content,
+        'content': body.coxntent,
     }
     posts.append(new_post)
     return new_post # 생성된(추가된) 데이터가 응답으로 반환된다.
