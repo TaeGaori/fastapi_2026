@@ -52,3 +52,32 @@ class MenuUpdateRequest(BaseModel):
         if v is not None and v <= 0:
             raise ValueError('가격은 0보다 커야합니다!')
         return v
+    
+# 임시 데이터 장소 --> Pydantic 모델 인스턴스로 저장 (타입 일관성 유지)
+menus:list[Menu] = [
+    Menu(id=1, name='김치찌개', category=CategoryEnum.한식, price=9000),
+    Menu(id=2, name='돈까스', category=CategoryEnum.일식, price=11000),
+    Menu(id=3, name='마라탕', category=CategoryEnum.중식, price=13000),
+    Menu(id=4, name='햄버거', category=CategoryEnum.양식, price=8500),
+]
+
+# 헬퍼 함수 : 다음 id 계산
+def get_next_id():
+    if not menus:
+        return 1    #메뉴가 하나도 없다면 1부터 시작
+    return max(menu.id for menu in menus) + 1
+
+# 엔드포인트 정의
+@app.get('/')
+def home():
+    """루트경로 - API 안내메시지 반환"""
+    return {'message':'오늘 뭐 먹지? 점심 메뉴 추천 API 입니다.'}
+
+@app.get('/menus', response_model=list[Menu])
+def get_menus():
+    """
+    전체 메뉴 목록 반환
+    GET /menus
+    응답 : 메뉴 리스트 전체
+    """
+    return menus
