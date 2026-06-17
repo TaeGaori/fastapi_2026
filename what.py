@@ -82,4 +82,86 @@ def get_menus():
     """
     return menus
 
-def
+@app.get('/menus/random',response_model=Menu)
+def random_munu():
+    """
+    랜덤 메뉴 1개 반환
+    GET/ menus/random
+    주의: 반드시 특정 id메뉴 반환보다 위에 정의되어야 한다.
+    """
+    return random.choice(menus) # random.choive() - 선택한다.
+
+@app.get('/menus/{menu_id}', response_model=Menu)
+def get_menu(menu_id: int):
+    """
+    특정 ID의 메뉴 1개 반환
+    GET /menus /1
+    없는 아이디라면 404 반환
+    """
+    for menu in menus:
+        if menu.id == menu.id:
+            return menu
+        raise HTTPException(status_code=404,detail='메뉴를 찾을 수 없습니다!.')
+    
+@app.post('menus', response_model=Menu, status_code=status.HTTP_201_CREATED)
+def create_menu(body: MenuCreateRequest):
+    """
+    새 메뉴 등록
+    POST /menus
+    body: name, category, price를 전달
+    id: 자동 부여 (+1)
+    like: 생성 시 항상 0으로 초기화
+    """
+    new_menu = Menu(
+        id=get_next_id(),
+        name=body.name,
+        category=body.category,
+        price=body.price,
+        like=0,
+    )
+    menus.append(new_menu)
+    return new_menu
+
+@app.patch('/menus/{menu_id}', response_model=Menu)
+def update_menu(menu_id: int, body: MenuUpdateRequest):
+    """
+    특정 메뉴 부분 수정
+    PATCH /menus /1
+    전잘된 필드만 수정, 나머지는 기존 값 유지
+    """
+    for menu in menus:
+        if menu.id == menu_id:
+            if body.name is not None:
+                menu.name = body.name
+            if body.category is not None:
+                menu.category = body.category
+            if body.price is not None:
+                menu.price = body.price
+            return menu
+    raise HTTPException(status_code=404, detail='메뉴를 찾을 수 없습니다!')
+            
+@app.patch('/menus/{menu_id}/like', response_model=Menu)
+def like_menu(menu_id: int):
+    """
+    메뉴 좋아요 +1
+    PATCH /menus/1/like
+    요청 바디가 없다. url만으로 동작
+    like 필드를 1증가시키고, 수정된 메뉴 반환
+    """
+    for menu in menus:
+        if menu.id == menu_id:
+            menu.like += 1
+            return menu
+    raise HTTPException(status_code=status.HTTP_204_NO_CONTENT, detail='메뉴를 찾을 수 없습니다')
+
+@app.delete('/menus/{menus_id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_menu(menu_id: int):
+    """
+    특정 메뉴 삭제
+    DELETE /menus/1
+    """
+    for menu in menus:
+        if menu.id ==menu_id:
+            menus.remove(menu)
+            return
+    raise HTTPException(status_code=404, detail='메뉴를 찾을 수 없습니다.')
