@@ -7,6 +7,7 @@
 
 from database import init_db
 from loader import load_from_csv
+from verify import verify
 # <<검증 모듈>>
 
 def main():
@@ -19,7 +20,7 @@ def main():
 
     print()
     print('3) 적재 검증')
-    # 검증 함수 호출
+    verify()    # 검증 함수 호출
 
 if __name__ == '__main__':
     main()
