@@ -24,7 +24,7 @@ class Player(Base):
     last_name = Column(String, nullable=False)
     position = Column(String, nullable=False)
     # 이 행이 마지막으로 갱신된 날짜
-    last_changed_data = Column(Date, nullable=False)
+    last_changed_date = Column(Date, nullable=False)
 
     # 1:N (일대다관계, 선수:성적 관계)
     performances = relationship("Performance", back_populates='player')
