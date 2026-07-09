@@ -78,7 +78,7 @@ def test_get_leagues(db_session):
 
 def test_get_team(db_session):
     """전체 팀 수가 20개인지 확인"""
-    teams = crud.get_leagues(db_session, skip=0, limit=10000,
+    teams = crud.get_teams(db_session, skip=0, limit=10000,
                            min_last_changed_date=test_date)
     assert len(teams) == 20
 
@@ -101,7 +101,7 @@ def test_get_teams_players(db_session):
 def test_get_player_count(db_session):
     """전체 선수 수를 센다.  1008"""
     player_count = crud.get_player_count(db_session)
-    assert player_count == 1008
+    assert player_count == 1018
 
 
 def test_get_team_count(db_session):

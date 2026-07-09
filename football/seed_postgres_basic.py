@@ -135,7 +135,7 @@ def seed() -> None:
         team_players = [
             models.TeamPlayer(
                 team_id=int(row["team_id"]),
-                players_id=int(row["player_id"]),
+                player_id=int(row["player_id"]),
                 last_changed_date=parse_date(row["last_changed_date"]),
             )
             for row in read_rows("team_player_data.csv")
