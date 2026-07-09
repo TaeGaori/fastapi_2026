@@ -39,7 +39,7 @@ class Performance(Base):
     """
     __tablename__ = 'performance'
 
-    perfomance_id = Column(Integer, primary_key=True, index=True)
+    performance_id = Column(Integer, primary_key=True, index=True)
     week_number = Column(String, nullable=False)
     fantasy_points = Column(Float, nullable=False)
     last_changed_date = Column(Date, nullable=False)
@@ -84,11 +84,11 @@ class TeamPlayer(Base):
 
     테이블 자체는 독자적인 대리키(surrogate key)기 없고,
     (team_id, player_id) 조합 전체를 복합 기본키로 사용한다.
-    --> 같은 team_id + palyer_id 조합은 한 번만 존재할 수 있다. (중복 가입 방지)
+    --> 같은 team_id + player_id 조합은 한 번만 존재할 수 있다. (중복 가입 방지)
     """
     __tablename__ = 'team_player'
 
     team_id = Column(Integer, ForeignKey('team.team_id'), primary_key=True,index=True)
-    palyer_id = Column(Integer, ForeignKey('player.player_id'), primary_key=True,index=True)
+    player_id = Column(Integer, ForeignKey('player.player_id'), primary_key=True,index=True)
     last_changed_date = Column(Date, nullable=False)
     

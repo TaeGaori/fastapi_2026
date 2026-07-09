@@ -12,7 +12,7 @@ import models
 def get_player(db: Session, player_id: int):
     """player_id 하나로 선수 1명을 조회한다. 없으면 None을 반환"""
     return db.query(models.Player).filter(
-        models.Player.player_od == player_id
+        models.Player.player_id == player_id
     ).first()   # player_id의 첫번째 레코드(행)를 조회하고 반환
 
 def get_players(db: Session, skip: int = 0, limit: int = 100, min_last_changed_date: date = None, 
@@ -43,7 +43,7 @@ def get_players(db: Session, skip: int = 0, limit: int = 100, min_last_changed_d
 
 def get_performances(db: Session, skip: int = 0, limit: int = 100, min_last_changed_date: date = None):
     """경기성적(perfromances) 레코드 목록을 조회한다. get_players와 동일한 패턴"""
-    query = db.query(models.performance)
+    query = db.query(models.Performance)
     if min_last_changed_date:
         query = query.filter(
             models.Performance.last_changed_date >= min_last_changed_date
@@ -95,7 +95,7 @@ def get_team_count(db: Session):
     query = db.query(models.Team)
     return query.count()
 
-def get_League_count(db: Session):
+def get_league_count(db: Session):
     """전체 리그 수를 센다"""
     query = db.query(models.League)
     return query.count()

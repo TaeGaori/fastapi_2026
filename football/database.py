@@ -4,7 +4,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-DB_URL = 'postgresql://postgres:1234@localhost:5432/swc_api'
+DB_URL = 'postgresql+psycopg2://postgres:1234@localhost:5432/swc_api'
 
 # create_engine은 DB와 통신할 커넥션 풀을 만든다.
 # pool_pre_ping=True --> 풀에서 커넥션을 꺼내쓰기 전에 "SELECT 1"같은 가벼운 쿼리로 살아있는 연결인지 먼저 확인한다.
