@@ -53,5 +53,7 @@ def get_session():
     1. 호출부를 단순하게 유지 : 다른 모듈(파일)에서 SessionLocal이 뭔지 몰라도
     from database import get_session만 세션을 바로 사용할 수 있다.
     2. 나중에 세션 생성 시 로깅을 추가하거나, 그 외 기능을 수정 및 추가할 때
-    get_session() ㅐㄴ부만 수정하면 된다.
+    get_session() 내부만 수정하면 된다.
     """
+
+    return SessionLocal()

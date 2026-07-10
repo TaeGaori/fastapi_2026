@@ -18,7 +18,7 @@ CHUNK_SIZE = 5000
 # CSV -> 
 
 # 주말 여부 --> 주말이다! / 아니다! 
-#   파이썬은 bool("false") --> 파이썬 입장에서는 "비어있지 않은 문자열" dlfktj cka
+#   파이썬은 bool("false") --> 파이썬 입장에서는 "비어있지 않은 문자열"이라서 참
 #    이런 문제를 예빵하기 위해서 딕셔너리로 명시적 변환
 WEEKEND_MAP = {
     True: True, False: False, # 이미 파이썬 bool자료형인경우

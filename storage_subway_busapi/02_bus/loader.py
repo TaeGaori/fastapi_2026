@@ -17,7 +17,7 @@ def load_from_csv(path: str=INPUT_PATH) -> dict:
     df['수집일시'] = pd.to_datetime(df['수집일시'], errors='coerce').dt.date
     df['정류소번호'] = pd.to_numeric(df['정류소번호'], errors='coerce')
 
-    db = get_session
+    db = get_session()
     success = 0
     failed = 0
 
