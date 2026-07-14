@@ -41,7 +41,7 @@ def create_station_summary() -> None:
             "역명" AS station_name,
             COUNT(*) AS row_count,
             SUM("인원수") AS total_passengers,
-            ROUND(AVG("인원수")::) AS avg_passengers
+            ROUND(AVG("인원수")):: INT AS avg_passengers
         FROM subway_raw
         GROUP BY "역번호", "역명";
 

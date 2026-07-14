@@ -34,7 +34,7 @@ def check_required_tables() -> None:
     실제로 존재하고 데이터가 들어있는지 검증하는 함수
 
     "Fail Fast" 원칙
-        원본데이터가 없는 상태로 처리 로직을 싱행하면 이해하기 어려운 에러가 한참 뒤에 발생
+        원본데이터가 없는 상태로 처리 로직을 실행하면 이해하기 어려운 에러가 한참 뒤에 발생
         미리 검증해서 명확하게 문제 해결
     """
     checks = [
@@ -64,8 +64,8 @@ def execute_sql(engine ,sql:str, params:dict | None = None) -> None:
 
     with engine.begin() as conn:
         statements = [statement.strip() for statement in sql.split(';') if statement.strip()]
-        for statements in statements:
-            conn.execute(text(statements), params or {})
+        for statement in statements:
+            conn.execute(text(statement), params or {})
 
 
 # ================================================
