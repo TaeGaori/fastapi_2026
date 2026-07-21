@@ -41,7 +41,7 @@ def create_daily_summary() -> None:
         GROUP BY "날짜", "승하차";
 
         CREATE INDEX idx_traffic_daily_summary_date_type
-        ON traffic_daily_summary(use_date, use_date);
+        ON traffic_daily_summary(use_date, ride_type);
         """
     )
     print('[batch] 날짜별 승하차 집계 완료: traffic_daily_summary ')

@@ -72,6 +72,7 @@ def init_bus_alert_table() -> None:
     """
     버스 정류소 관련 이상 이벤트 알림을 저장할 테이블을 준비(없으면 생성)
 
+        - TEXT : 길이를 미리 정하지 않는 PostgreSQL 문자열 타입
     """
     execute_sql(
         bus_engine,
@@ -163,16 +164,16 @@ def detect_bus_coordinate_events() -> None:
             :detected_at
         FROM bus_stop
         WHERE "위도" IS NULL OR "경도" IS NULL 
-        OR "위도" NOT BETWEEN :lat_min AND :lat_max
-        OR "경도" NOT BETWEEN :lon_min AND :lon_max;
+            OR "위도" NOT BETWEEN :lat_min AND :lat_max
+            OR "경도" NOT BETWEEN :lon_min AND :lon_max;
         """,
-    {
-        "lat_min": DAEGU_LAT_MIN,
-        "lat_max": DAEGU_LAT_MAX,
-        "lon_min": DAEGU_LON_MIN,
-        "lon_max": DAEGU_LON_MAX,
-        "detected_at": datetime.now()
-    }
+        {
+            "lat_min": DAEGU_LAT_MIN,
+            "lat_max": DAEGU_LAT_MAX,
+            "lon_min": DAEGU_LON_MIN,
+            "lon_max": DAEGU_LON_MAX,
+            "detected_at": datetime.now()
+        }
     )
 
     allowed_values = ', '.join(f"'{value}'" for value in sorted(BUS_LOCATION_GROUPS))
@@ -183,7 +184,7 @@ def detect_bus_coordinate_events() -> None:
             event_type, stop_id, stop_name, detail, detected_at
         )
         SELECT
-            'BUS_LACATION_GROUP_INVALID', "정류소ID", "정류소명",
+            'BUS_LOCATION_GROUP_INVALID', "정류소ID", "정류소명",
             CONCAT('location_group=', COALESCE("위치구분", 'NULL')),
             :detected_at
         FROM bus_stop

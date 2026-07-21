@@ -33,8 +33,8 @@ class Performance(BaseModel):
 # 선수 기본 정보 - 다른 응답 모델에서도 재사용하기 위해 Base 클래스로 분리
 class PlayerBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    player_id = int
-    gsis_id = str | None
+    player_id : int
+    gsis_id : str | None
     first_name : str
     last_name : str
     position : str
@@ -47,7 +47,7 @@ class Player(PlayerBase):
 
     # 빈 리스트 --> []를 클래스 변수 기본값으로 두면 여러 객체가 같은 리스트를 공유할 수 있어 좋지 않다.
     # Pydantic이 내부적으로 보호해주는 경우도 있지만, 안전한 패턴을 사용한다.
-    performance = List[Performance] = Field(default_factory=list)
+    performance : List[Performance] = Field(default_factory=list)
 
 
 class TeamBase(BaseModel):
