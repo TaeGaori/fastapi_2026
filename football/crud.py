@@ -125,7 +125,7 @@ def get_teams(db: Session, skip: int = 0, limit: int = 100,
     if team_name:
         stmt = stmt.where(models.Team.team_name == team_name)
     if league_id:
-        stmt = stmt.where(models.Team.leauge_id == league_id)
+        stmt = stmt.where(models.Team.league_id == league_id)
     stmt = stmt.offset(skip).limit(limit)
     return db.scalars(stmt).all()
 

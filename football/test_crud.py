@@ -44,6 +44,18 @@ def test_get_players(db_session):
     assert len(players) == 1018
 
 
+def test_get_players_by_name(db_session):
+    """
+    이름으로 선수를 검색했을 떄 예상과 일치하는지 테스트
+
+    first_name / last_name 두 조건을 동싱 걸어서 정확히 1명 나오는지(동명이인X)
+    그 결과로 나온 1명이 정확히 원하는 선수인지를 player_id로 재확인
+    """
+    players = crud.get_players(db_session, first_name='Bryce', last_name='Young')
+    assert len(players) == 1
+    assert players[0].player_id == 2009
+
+
 def test_get_all_performances(db_session):
     """전체 성적 기록 수가 17306건인지 확인"""    
     performances = crud.get_performances(db_session, skip=0, limit=18000)

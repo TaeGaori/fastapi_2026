@@ -5,14 +5,12 @@ import pandas as pd
 file = st.file_uploader(
     'csv파일을 업로드하세요',
     type='csv',
-    accept_multiple_files=False
 )
 
-if file is not None:
-    st.write('업로드된 파일 미리보기')
+if file is not None:    
     df = pd.read_csv(file)
-    st.write(df)
-
+    st.write('업로드된 파일 미리보기')
+    st.dataframe(df.head())
     st.divider()
 
     Q1 = st.multiselect(
@@ -21,7 +19,7 @@ if file is not None:
     )
     Q2 = st.selectbox(
         '범위로 필터링할 열을 선택하세요',
-        ['Unnamed: 0', '가격']
+        ['Unnamed: 0', '가격']  
     )    
     correct = '가격'
 
@@ -36,13 +34,11 @@ if file is not None:
             (df[Q2] >= min_price) &
             (df[Q2] <= max_price)
         ]
+    st.write(f"필터링 결과 ({len(filtered_df)}건)")
+    
 
 
-st.divider()
-
-st.write(f"필터링 결과 ({len(filtered_df)}건)")
-
-if Q1:
-    st.dataframe(filtered_df[Q1])
-else:
-    st.warning("표시할 열을 선택하세요.")
+    if Q1:
+        st.dataframe(filtered_df[Q1])
+    else:
+        st.warning("표시할 열을 선택하세요.")
