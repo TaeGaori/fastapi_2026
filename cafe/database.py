@@ -15,3 +15,6 @@ def init_db(drop_existion: bool = True):
 
     Base.metadata.create_all(bind=engine)
     print('[database]테이블 준비 완료')
+
+def get_session():
+    return SessionLocal()
