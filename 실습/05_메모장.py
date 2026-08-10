@@ -1,7 +1,7 @@
 # GET API : 전체 데이터 조회하기
 
-from schema.response import TodoResponse
-from schema.request import TodoCreateRequest, TodoUpdateRequest
+from todo.schema.response import TodoResponse
+from todo.schema.request import TodoCreateRequest, TodoUpdateRequest
 from fastapi import FastAPI, status, HTTPException
 
 app = FastAPI()

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 from database import engine, get_session
-from models import Menu, Order
+from todo.models import Menu, Order
 
 BASE_DIR = os.getcwd()
 Menu_PATH = os.path.join(BASE_DIR, 'input', 'menu.csv')

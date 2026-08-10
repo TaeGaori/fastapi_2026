@@ -23,7 +23,7 @@
 #       TestClient는 실제 네트워크 통신 없이 main.py의 app 객체를 파이썬 함수 호출 수준에서 그대로 실행 --> 서버를 따로 켜둘 필요가 없다 --> pytest 한 줄로 API테스트가 가능하다.
 # ======================
 from fastapi.testclient import TestClient
-from main import app
+from todo.main import app
 
 client = TestClient(app)
 

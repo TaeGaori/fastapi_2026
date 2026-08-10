@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from database import get_session
-from models import lottery
+from todo.models import lottery
 
 BASE_DIR = os.getcwd()
 INPUT_PATH = os.path.join(BASE_DIR, 'data', 'lottery_win.csv')

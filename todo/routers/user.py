@@ -4,13 +4,14 @@
 # - 현재는 회원가입 1개만 구현되어 있다. (로그인 아직 없음)
 # ===================================================
 
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Depends, BackgroundTasks, Request
 from sqlalchemy import select
-from schema.request import UserSignUpRequest
+from schema.request import UserSignUpRequest, UserLoginRequest
 from schema.response import UserSignUpResponse
-from database.db_connection import SessionFactory
+from database.db_connection import SessionFactory, get_session
 from models import User
-from auth.password import hash_password
+from auth.password import hash_password, verify_password
+from auth.jwt import create_access_token
 
 router = APIRouter(tags=['User'])
 
@@ -20,7 +21,7 @@ router = APIRouter(tags=['User'])
     status_code=status.HTTP_201_CREATED,
     response_model=UserSignUpResponse
 )
-def singup_user_handler(body: UserSignUpRequest):   # 요청 덷이터 검증
+def singup_user_handler(body: UserSignUpRequest):   # 요청 데이터 검증
     with SessionFactory() as session:
         stmt = select(User).where(User.email == body.email) # 같은 이메일이 있다면
         existing_user = session.scalar(stmt)

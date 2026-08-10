@@ -1,5 +1,5 @@
-from schema.response import Postresponse
-from schema.request import PostCreateRequest, PostUpdateRequest
+from todo.schema.response import Postresponse
+from todo.schema.request import PostCreateRequest, PostUpdateRequest
 from fastapi import FastAPI, status, HTTPException
 
 app = FastAPI(

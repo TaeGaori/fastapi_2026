@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from models import Base
+from todo.models import Base
 
 DB_URL = 'postgresql+psycopg2://postgres:1234@localhost:5432/cafedb'
 

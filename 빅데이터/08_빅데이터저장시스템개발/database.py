@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Base
+from todo.models import Base
 
 DB_URL = 'postgresql://postgres:1234@localhost:5432/lotteryaipdb'
 
