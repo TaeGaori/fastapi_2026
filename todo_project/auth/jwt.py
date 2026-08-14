@@ -18,7 +18,7 @@ refresh_token = None (초기화)
 - 수명을 짧게 하면 -> 30분마다 로그인해야 해서 불편함
 - 수명을 길게 하면 -> 탈취당했을 대 오래 악용 가능하고, 서버가 저장 나 하니 강제로 막을 방법도 없음
 그래서 "자주 쓰지만 짧게 사는 access_token" + "가끔 쓰지마 ㄴ오래 살고 DB에서 통제 가능한 refresh_token"으로
-역하릉ㄹ 쪼갠 것이다. Access_token은 탈취되어도 피해가 최대 30분으로 제한되고,
+역할을 쪼갠 것이다. Access_token은 탈취되어도 피해가 최대 30분으로 제한되고,
 로그인 자체는 refresh_token덕분에 7일간 끊기지 않는다.
 
 payload에 들어있는 "type":"access"/"type":"refresh"필드가 두 토큰을 구분하는 유일한 표식
@@ -47,7 +47,7 @@ def _create_token(user_id: int, token_type: str, expires_delta: timedelta) -> st
     payload = {
         'user_id' : user_id,
         'type' : token_type,    # Access/Refresh
-        'exp' : datetime.now(timezone.utc) + expires_delta,
+        'exp' : (datetime.now(timezone.utc) + expires_delta).timestamp(),
 
     }
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
@@ -65,7 +65,7 @@ def decode_token(token: str, expected_type: str) -> int:
     오남용을 여기서 걸러낸다.(핵심 포인트)
     """
     try:
-        payload = jwt.decode(token, SECRET_KEY, alforithms=[ALGORITHM]) # 서명 검증 + payload 복원
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM]) # 서명 검증 + payload 복원
     except jwt.ExpiredSignatureError:   # 토큰이 만료된 경우
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail='Token expired')
     except jwt.InvalidTokenError:       # 그 외 나머지 토큰 오류(ex.서명 불일치, 형식 오류 등)

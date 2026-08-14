@@ -37,7 +37,7 @@ class TodoService:
         return self.repository.save(todo)   # DB에 저장(서비스가 바로 저장 X -> 레파지토리한테 맡긴다)
 
     def update_todo(self, todo_id: int, body: TodoUpdateRequest, user_id: int) -> Todo:
-        todo = self.set_todo(todo_id, user_id)
+        todo = self.get_todo(todo_id, user_id)
         if body.title is not None:  # 수정할 데이터가 있다면 
             todo.title = body.title # 할 일 수정
         if body.is_done is not None:

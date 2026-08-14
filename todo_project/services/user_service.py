@@ -44,7 +44,7 @@ class UserService:
         user.refresh_token = refresh_token
         self.repository.save(user)
 
-        return{'access_token':access_token, 'refresh_token': refresh_token}
+        return {'access_token':access_token, 'refresh_token': refresh_token}
 
     def refresh(self, refresh_token: str) -> dict:
         """
@@ -63,18 +63,18 @@ class UserService:
                 detail='유효하지 않은 refresh token입니다. 다시 로그인 해주세요.'
             )
 
-        return{'access_token': create_access_token(user_id=user.id)}   # 새 access_token 발급
+        return {'access_token': create_access_token(user_id=user.id)}   # 새 access_token 발급
 
-        def logout(self, refresh_token: str) -> None:
-            """
-            DB에 저장해둔 refresh_token을 지워서 "로그아웃"을 구현
-            (쿠키/세션 방식이 아니라 DB기반이라는 것이 핵심이다. 
-            JWT는 stateless, 서버가 스스로 토큰을 무효화한다는 개념이 원래는 없다.
-            refresh_token 만큼은 DB로 추적해서 로그아웃을 실제로 동작하게 만든다.
-            access_token 자체는 만료 전까지는 여전히 유효하다는 점이 한계다
-            """
-            user_id = decode_token(refresh_token, expected_type='refresh')
-            user = self.repository.find_by_id(user_id)
-            if user:
-                user.refresh_token = None   # None으로 초기화 (로그아웃)
-                self.repository.saver(user) # 로그아웃한 것을 저장
+    def logout(self, refresh_token: str) -> None:
+        """
+        DB에 저장해둔 refresh_token을 지워서 "로그아웃"을 구현
+        (쿠키/세션 방식이 아니라 DB기반이라는 것이 핵심이다. 
+        JWT는 stateless, 서버가 스스로 토큰을 무효화한다는 개념이 원래는 없다.
+        refresh_token 만큼은 DB로 추적해서 로그아웃을 실제로 동작하게 만든다.
+        access_token 자체는 만료 전까지는 여전히 유효하다는 점이 한계다
+        """
+        user_id = decode_token(refresh_token, expected_type='refresh')
+        user = self.repository.find_by_id(user_id)
+        if user:
+            user.refresh_token = None   # None으로 초기화 (로그아웃)
+            self.repository.save(user) # 로그아웃한 것을 저장

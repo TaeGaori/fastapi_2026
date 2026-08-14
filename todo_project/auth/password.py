@@ -20,11 +20,11 @@ def hash_password(plain_password: str) -> str:
     """평문 비밀번호 -> 해시값으로 변환 (회원가입 시 DB 저장 직전에 사용)"""
     return password_hasher.hash(plain_password)
 
-def verify_password(pain_pssword: str, hashed_password: str) -> bool:
+def verify_password(plain_password: str, hashed_password: str) -> bool:
     """
     로그인 시 사용자가 입력한 평문 비밀번호가 DB에 저장된 해시값과 일치하는지 검증
     해시는 복호화가 불가능하므로, 저장된 해시를 평문으로 되돌리는 것이 아니라
     입력값을 같은 방식으로 다시 해싱해서 두 해시가 같은지를 비교한다.
     """
     
-    return password_hasher.verify(pain_pssword,hashed_password)
+    return password_hasher.verify(plain_password,hashed_password)
