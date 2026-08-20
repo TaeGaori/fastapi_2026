@@ -16,13 +16,13 @@ from starlette import status
 
 from database.db_connection import get_session
 from models import Todo
-from schema.response import ModelAccurayResponse
+from schema.response import ModelAccuracyResponse
 
 # 이 라우터의 모든 엔드포인트 앞에 자동으로 /admin이 붙는다. (접두어)
-# 지금은 실습용이라 누구나 접근 가능 -> 실무라면 관리자 권ㄹ한 체크가 필요하다.
-router = APIRouter(prefix='/admin', tages=['ML Monitoring'])
+# 지금은 실습용이라 누구나 접근 가능 -> 실무라면 관리자 권한 체크가 필요하다.
+router = APIRouter(prefix='/admin', tags=['ML Monitoring'])
 
-@router.get('/model-accuracy', response_model=ModelAccurayResponse, status_code=status.HTTP_200_OK)
+@router.get('/model-accuracy', response_model=ModelAccuracyResponse, status_code=status.HTTP_200_OK)
 def get_model_accuracy_handler(session=Depends(get_session)):
     """
     final_category가 채워진(= 사용자가 확인/수정을 완료한) Todo만 "정답이 있는" 데이터로 취급해서
@@ -44,7 +44,7 @@ def get_model_accuracy_handler(session=Depends(get_session)):
     # total_labeled가 0이면 0으로 나누는 에러가 발생하니까 미리 방어 처리
     accuracy = round(correct / total_labeled, 4) if total_labeled > 0 else None
 
-    return ModelAccurayResponse(
+    return ModelAccuracyResponse(
         total_labeled=total_labeled,
         correct=correct,
         accuracy=accuracy,

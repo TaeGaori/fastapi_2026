@@ -30,7 +30,7 @@ def send_welcome_email(email: str):
     print(f'Send welcome email to {email}...')
 
 @router.post('/users/signup', status_code=status.HTTP_201_CREATED, response_model=UserSignUpResponse)
-def singup_user_handler(
+def signup_user_handler(
     body: UserSignUpRequest,
     background_tasks: BackgroundTasks,
     service: UserService = Depends(get_user_service),

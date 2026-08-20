@@ -49,7 +49,7 @@ class Todo(Base):
         String(20), nullable=True,
     )  # 모델이 예측한 카테고리(Todo 생성 시 자동 저장)
     final_category : Mapped[str | None] = mapped_column(
-        String(20), nullalbe=True,
+        String(20), nullable=True,
     )   # 사용자가 직접 수정/확정한 카테고리(없으면 예측값을 그대로 신뢰한 것)
 
         
