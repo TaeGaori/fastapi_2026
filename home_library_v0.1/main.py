@@ -14,6 +14,13 @@ from PIL import Image, UnidentifiedImageError
 from database import Base, engine, get_db
 from models import Book
 from services.recognition import extract_isbn   # version3에 추가
+import os
+import pytesseract
+
+default_path = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+if os.path.exists(default_path):
+    pytesseract.pytesseract.tesseract_cmd = default_path
+
 
 UPLOAD_DIR = Path('uploads')
 UPLOAD_DIR.mkdir(exist_ok=True)
