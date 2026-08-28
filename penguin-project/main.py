@@ -20,16 +20,12 @@ except Exception as e:
     print('로드 실패 ')
     model = None
 
-@app.get('/',
-         status_code=status.HTTP_200_OK
-)
+@app.get("/")
 def root():
-    return{
-        'message': '서버 실행'
-    }   
+    return{'message': '서버 실행'}   
 
 
 @app.get('/model-info/')
 def input_model(
-
+    
 )
