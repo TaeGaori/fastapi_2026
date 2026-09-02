@@ -1,6 +1,6 @@
 '''
-home_library_v1 / services/recognition.py
------------------------------
+home_library_v4 / services/recognition.py
+-------------------------------------------
 국립중앙도서관 소장자료 검색 API 버전
 '''
 import json
@@ -10,12 +10,9 @@ import urllib.parse
 import urllib.request
 from dotenv import load_dotenv
 
-load_dotenv()
-
-
 def normalize_isbn(value: str) -> str | None:
     """
-    isbn 10자리, 13자리에 따라서 체크
+    isbn 10자리, 13자리에 따라서 체크섬
     """
     digits = re.sub(r'[^0-9Xx]', '', value)
 
@@ -36,10 +33,9 @@ def normalize_isbn(value: str) -> str | None:
 
     return None
 
-
 def extract_isbn(image_path) -> str | None:
     """
-    isbn 바코드(이미지 경로)가 들어있는 
+    isbn 바코드(이미지 경로)가 들어왔을 때 올바른 isbn 체크섬
     """
     try:
         import pytesseract
@@ -62,15 +58,16 @@ def extract_isbn(image_path) -> str | None:
 
     return None
 
+load_dotenv()
+
 # 국립 중앙도서관 인증키
 NLK_SEARCH_KEY = os.environ.get('NLK_SEARCH_KEY', '')
+# print(NLK_SEARCH_KEY)
 NLK_SEARCH_URL = 'https://www.nl.go.kr/NL/search/openApi/search.do'
 
 
 def clean_title(raw_title: str | None) -> str | None:
-    """
-    순수 제목 추출
-    """
+    """순수 제목 추출"""
     if not raw_title:
         return None
     return raw_title.split(' : ')[0].strip()

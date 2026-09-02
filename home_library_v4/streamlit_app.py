@@ -1,5 +1,5 @@
 '''
-home_library_v3 / streamlit_app.py
+home_library_v4 / streamlit_app.py
 ------------------------------------
 Docker 결합 시 변경 사항
 - import os 추가
@@ -10,7 +10,7 @@ import os
 import requests
 import streamlit as st
 
-API = os.getenv('API_URL', 'http://localhost:8000')
+API = os.getenv('API_URL', 'http://localhost:8000') 
 
 st.title('우리집 책장 (개발 중)')
 
