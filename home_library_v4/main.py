@@ -1,5 +1,5 @@
 '''
-home_library_v2 / main.py
+home_library_v4 / main.py
 -----------------------------
 기존 JSON API 라우터(/books/lookup, /books/register) 응답형태 그대로 두고,
 새로 추가되는 HTML 라우터(/ui/books/lookup, /ui/books/register)를 추가

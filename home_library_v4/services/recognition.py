@@ -1,5 +1,5 @@
 '''
-home_library_v4 / services/recognition.py
+home_library_v1 / services/recognition.py
 -------------------------------------------
 국립중앙도서관 소장자료 검색 API 버전
 '''
